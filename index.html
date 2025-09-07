@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Product Scanner – Discover Products Smarter</title>
+  <meta name="description" content="Scan barcodes, snap product photos, and instantly get AI-powered answers to commonly asked questions about retail products." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta property="og:title" content="AI Product Scanner" />
+  <meta property="og:description" content="Scan. Snap. Learn. AI-powered answers for every product." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="" />
+  <meta name="theme-color" content="#4A90E2" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-elev: #f9fafc;
+      --card: #ffffff;
+      --text: #212121;
+      --muted: #555;
+      --brand: #4A90E2;
+      --brand-2: #2196F3;
+      --outline: #e5e7eb;
+      --radius: 8px;
+      --shadow: 0 6px 20px rgba(0,0,0,.08);
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container { width: min(1120px, 92vw); margin: 0 auto; }
+    header {
+      position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px);
+      background: rgba(255,255,255,.9); border-bottom: 1px solid var(--outline);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    .brand { display:flex; gap:10px; align-items: center; font-weight: 700; }
+    .brand .logo { width: 36px; height: 36px; border-radius: 8px; background: var(--brand); display:grid; place-items:center; box-shadow: 0 2px 10px rgba(25,118,210,.3); }
+    .brand .logo svg { width: 22px; height:22px; fill: white; }
+    .navlinks { display:flex; gap: 22px; align-items:center; }
+    .navlinks a { color: var(--muted); font-weight: 500; }
+    .cta { display:inline-grid; place-items:center; padding: 10px 20px; border-radius: 6px; background: var(--brand); color:white; font-weight:600; box-shadow: 0 2px 8px rgba(25,118,210,.25);}    
+    .cta:hover { filter: brightness(1.05); text-decoration:none; }
+    .ghost { border:1px solid var(--outline); color: var(--text); background: transparent; padding: 10px 20px; border-radius:6px; font-weight:600; }
+
+    .grid { display:grid; gap: 18px; grid-template-columns: repeat(12, 1fr); }
+    .card { background: var(--card); border: 1px solid var(--outline); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); }
+    .card h3 { margin: 10px 0 6px; }
+    .card p { color: var(--muted); margin: 0; }
+    .icon { width: 38px; height: 38px; border-radius: 6px; display:grid; place-items:center; background: var(--brand-2); color:white; }
+    .icon svg { width:22px; height:22px; fill:white; }
+
+    .badge { display:inline-flex; gap:8px; align-items:center; border:1px solid var(--outline); padding:6px 10px; border-radius: 6px; color: var(--brand); background: #eaf3ff; font-weight:600; }
+    .hero { padding: 90px 0 44px; background: radial-gradient(1000px 600px at 100% -10%, rgba(33,150,243,.18), transparent), linear-gradient(180deg, #ffffff, #f9fbff); }
+    .hero h1 { font-size: clamp(34px, 6vw, 46px); line-height: 1.1; margin: 18px 0 10px; }
+    .hero p { font-size: clamp(16px, 2.2vw, 20px); color: #333; max-width: 860px; }
+
+    /* Steps – fixed alignment */
+    .steps { margin-top: 8px; }
+    .step { display:flex; gap:16px; align-items:center; padding:16px; background: var(--bg-elev); border:1px solid var(--outline); border-radius: 6px; }
+    .step:not(:last-child) { margin-bottom: 14px; }
+    .step .num { flex-shrink:0; width:36px; height:36px; border-radius:6px; display:flex; align-items:center; justify-content:center; background: var(--brand); color:white; font-weight: 700; }
+    .step h3 { margin:0; line-height:1; }
+    .step p { margin:4px 0 0; color: var(--muted); }
+
+    section { padding: 54px 0; }
+    .section-title { font-size: 26px; margin-bottom: 10px; }
+    .section-sub { color: var(--muted); margin-top: 0; }
+
+    .shots { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .shot { aspect-ratio: 10/16; border-radius: 12px; border:1px solid var(--outline); background: linear-gradient(180deg, #ffffff, #f3f7ff); display:grid; place-items:center; color: var(--muted); box-shadow: var(--shadow); font-weight:600; }
+
+    .legal { background: #fbfcfe; border-top:1px solid var(--outline); }
+    details { border:1px solid var(--outline); border-radius: 10px; padding: 14px 16px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.03); }
+    summary { cursor: pointer; font-weight: 700; color: var(--brand); }
+    .support-card { background: var(--card); border: 1px solid var(--outline); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); display:grid; gap:14px; }
+    .support-card a.button { display:inline-block; padding: 10px 14px; border-radius: 6px; border:1px solid var(--outline); background:#fafafa; }
+
+    footer { padding: 28px 0 44px; color: var(--muted); border-top:1px solid var(--outline); background:#fff; }
+    .footergrid { display:grid; grid-template-columns: 1fr auto; gap: 16px; align-items:center; }
+    .footerlinks { display:flex; gap:16px; flex-wrap: wrap; }
+
+    @media (max-width: 900px) {
+      .card { grid-column: span 6; }
+    }
+    @media (max-width: 640px) {
+      .navlinks { display:none; }
+      .card { grid-column: span 12; }
+      .hero { padding-top: 70px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Nav -->
+  <header>
+    <div class="container nav">
+      <a href="#home" class="brand" aria-label="AI Product Scanner home">
+        <span class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img" aria-label="logo">
+            <path d="M4 5h2v14H4zM8 5h1v14H8zM11 5h2v14h-2zM15 5h1v14h-1zM18 5h2v14h-2z"/>
+          </svg>
+        </span>
+        <span>AI Product Scanner</span>
+      </a>
+
+      <nav class="navlinks" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#support">Support</a>
+        <a class="cta" style=color:white;" href="#download">Get the App</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main id="home" class="hero">
+    <div class="container">
+      <span class="badge">Discover Products Smarter with AI‑Powered Product Scanning</span>
+      <h1>Scan. Snap. Learn.</h1>
+      <p>
+        Ever wondered what's behind the barcode? With our AI-powered app, simply scan any barcode and instantly uncover answers to the most commonly asked questions about the product. No need to dig through websites or reviews.
+<br><br>If barcode isn't recognized, no problem - just take a photo of the product, and our intelligent image recognition will work to identify it and give you the same smart insights.
+
+<br><br>Perfect for shoppers, hobbyists, or the simply curious - Start scanning and see what your products have to say.</p>
+      <div class="actions" style="display:flex; gap:12px; margin-top: 22px; flex-wrap: wrap;">
+        <a class="cta" id="download" href="#" aria-label="Download on the App Store (coming soon)">Coming soon on the App Store</a>
+        <a class="ghost" href="#features">Explore features</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="container">
+      <h2 class="section-title">Why you’ll love it</h2>
+      <p class="section-sub">Fast and helpful answers—right when you need them.</p>
+
+      <div class="grid">
+        <div class="card" style="grid-column: span 4;">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M3 3h18v2H3zM3 19h18v2H3zM7 8h2v8H7zM11 8h2v8h-2zM15 8h2v8h-2z"/></svg>
+          </span>
+          <h3>Barcode & Photo</h3>
+          <p>Scan EAN/UPC barcodes or take a quick photo—our AI assist understands both.</p>
+        </div>
+        <div class="card" style="grid-column: span 4;">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 5v6l5 3-.8 1.3L11 14V7h2z"/></svg>
+          </span>
+          <h3>Instant Q&A</h3>
+          <p>Get concise answers to common questions like ingredients, features, usage, hazard, fit, care and more.</p>
+        </div>
+        <div class="card" style="grid-column: span 4;">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 6h16v12H4zM6 8h12v8H6z"/></svg>
+          </span>
+          <h3>Clean UI</h3>
+          <p>A minimal design focused on clarity—no clutter, just the helpful information you need.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section id="how">
+    <div class="container">
+      <h2 class="section-title">How it works</h2>
+      <p class="section-sub">Three simple steps to product clarity.</p>
+      <div class="steps">
+        <div class="step">
+          <span class="num">1</span>
+          <div>
+            <h3>Scan a retail EAN/UPC product barcode </h3>
+            <p>Press the barcode button and point the scanner window at a barcode. Our fast barcode recognition will only read EAN/UPC codes.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="num">2</span>
+          <div>
+            <h3>If barcode fails - use camer button</h3>
+            <p>If a barcode doesn’t scan or shows the wrong product, use the camera button to capture the front label instead.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="num">3</span>
+          <div>
+            <h3>Answers in your language and adapted to your region.</h3>
+            <p>You can also receive answers in your preferred language, with results adapted to your region where available.</p>
+          </div>
+        </div>
+        <div class="step">
+         
+          <svg viewBox="0 0 24 24" width="64" height="64" fill="none">
+  <!-- Yellow triangle -->
+  <path d="M1 21h22L12 2 1 21z" fill="#FFC107"/>
+  
+  <!-- Exclamation mark -->
+  <path d="M12 16a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-1-7h2v5h-2z" fill="#000"/>
+</svg>
+
+          <div>
+            <h3>Important Notice</h3>
+            <p>The AI assistant in this app may occasionally generate incomplete, inaccurate, or misleading responses. Always double-check health, safety, medical, nutritional, or other critical information from trusted, independent, and authoritative sources before making decisions.</p>
+          </div>
+        </div>
+
+      </div>
+<br>
+
+      <!--div class="shots" aria-label="App screenshots placeholder">
+        <div class="shot">Screenshot 1</div>
+        <div class="shot">Screenshot 2</div>
+        <div class="shot">Screenshot 3</div>
+      </div>
+    </div-->
+  </section>
+
+  <!-- Privacy -->
+  <section id="privacy" class="legal">
+    <div class="container">
+      <h2 class="section-title">Privacy policy</h2>
+      <p class="section-sub">We respect your privacy.</p>
+
+      <details open>
+        <summary>Summary</summary>
+        <p>
+          <strong>AI Product Scanner</strong> captures barcodes and optional product photos to identify items and generate AI‑assisted answers.
+          We do not sell personal data. Limited analytics may be used to improve app reliability and performance. You can delete the app at any time to remove locally stored data.
+        </p>
+      </details>
+
+      <details>
+        <summary>Data we collect</summary>
+        <ul>
+          <li>Camera input you choose to scan or photograph (processed to recognize products).</li>
+          <li>Optional usage analytics (e.g., crashes, basic device info). No precise location is collected.</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>How we use data</summary>
+        <ul>
+          <li>To recognize products and return relevant Q&A.</li>
+          <li>To diagnose issues and improve features and performance.</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>Sharing</summary>
+        <p>We do not sell or rent personal data. Service providers may process data under our instructions to operate core features.</p>
+      </details>
+
+
+      <!--details>
+        <summary>Contact</summary>
+        <p>Email: <a href="mailto:support@example.com">support@example.com</a></p>
+      </details-->
+
+      <p style="font-size: 12px; color: var(--muted); margin-top: 10px;">Last updated: <span id="pp-date"></span></p>
+    </div>
+  </section>
+
+  <!-- Support -->
+  <section id="support">
+    <div class="container">
+      <h2 class="section-title">Support</h2>
+      <p class="section-sub">Need help? We’re here. Use the quick links below or email us.</p>
+
+      <div class="grid">
+        <div class="card" style="grid-column: span 8;">
+          <h3>FAQs</h3>
+          <details>
+            <summary>Does it work with any retail product?</summary>
+            <p>It supports common retail barcodes (EAN/UPC) and works best with clear, well‑lit product front label photos.</p>
+          </details>
+          <details>
+            <summary>Why does the barcode scan sometimes fail or show the wrong product?</summary>
+            <p>Barcodes are not always reliable identifiers on the internet. Many products either do not appear in public barcode databases or are listed incorrectly. In some cases, barcode numbers are reused across different products. Put simply: bad data leads to bad AI.
+            <br>  That’s why the option to scan the front label of the product with your camera is provided, which gives the AI a much more accurate way to recognize the product.
+            </p>
+          </details>
+        
+          <details>
+            <summary>Does it require an account?</summary>
+            <p>No account is required to start scanning.</p>
+          </details>
+          
+        </div>
+
+        <div class="support-card" style="grid-column: span 4;">
+          <h3>Contact support</h3>
+          <p>Email us and we’ll follow up shortly.</p>
+          <a class="button" href="mailto:support@example.com?subject=AI%20Product%20Scanner%20Support">support@example.com</a>
+          <form onsubmit="mailtoSupport(event)" aria-label="Support request form" style="display:grid; gap:8px; margin-top:8px;">
+            <label>
+              <span style="display:block; font-weight:600;">Your email</span>
+              <input required type="email" id="email" placeholder="you@example.com" style="width:100%; padding:10px 12px; border-radius:8px; border:1px solid var(--outline); background:#fff; color:var(--text);" />
+            </label>
+            <label>
+              <span style="display:block; font-weight:600;">Message</span>
+              <textarea required id="message" rows="4" placeholder="How can we help?" style="width:100%; padding:10px 12px; border-radius:8px; border:1px solid var(--outline); background:#fff; color:var(--text);"></textarea>
+            </label>
+            <button class="cta" type="submit">Send support email</button>
+            <small style="color:var(--muted);">Submits via your email app.</small>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footergrid">
+      <div style="display:flex; gap:10px; align-items:center;">
+        <span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h2v14H4zM8 5h1v14H8zM11 5h2v14h-2zM15 5h1v14h-1zM18 5h2v14h-2z"/></svg></span>
+        <span>AI Product Scanner</span>
+      </div>
+      <div class="footerlinks">
+        <a href="#privacy">Privacy</a>
+        <a href="#support">Support</a>
+        <a href="#terms">Terms</a>
+        <a href="#home">Top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Terms -->
+  <section id="terms" class="legal" style="padding-top: 0;">
+    <div class="container" style="padding: 18px 0 44px;">
+      <details open>
+        <summary>Terms of use</summary>
+        <!--p>
+          This app is provided “as is” without warranties of any kind. Product information and AI‑generated content may contain inaccuracies and should not be solely relied upon for health, safety, or financial decisions. By using the app, you agree to comply with local laws and to use the app only for lawful purposes.
+        </p-->
+        <p>
+          This app is provided “as is” and “as available” without warranties of any kind, whether express or implied, including but not limited to merchantability, fitness for a particular purpose, and non-infringement.
+
+Accuracy of Information: Product information and AI-generated content may contain errors, omissions, or outdated details. Do not rely solely on the app for decisions involving health, safety, legal, or financial matters. Always confirm critical information with independent, trusted sources.
+
+No Liability: To the fullest extent permitted by law, the app provider is not responsible for any loss, injury, or damages — whether direct, indirect, incidental, or consequential — resulting from your use of the app.
+
+User Responsibility: By using the app, you agree to comply with all applicable local, regional, and national laws. You agree not to use the app for unlawful, harmful, or misleading purposes.
+
+Third-Party Content: The app may use or reference external databases and services not controlled by us. We make no guarantees about the accuracy, reliability, or availability of third-party information.
+
+Service Changes: Features, availability, or content may be modified, suspended, or discontinued at any time without notice.
+
+Consent to Use: By continuing to use this app, you acknowledge these terms and accept full responsibility for how you use the information provided.
+        </p>
+      </details>
+    </div>
+  </section>
+
+  <script>
+    // Privacy last updated date
+    document.getElementById('pp-date').textContent = new Date().toLocaleDateString(undefined, { year:'numeric', month:'long', day:'numeric' });
+
+    // Support form -> opens user's email client (mailto)
+    function mailtoSupport(e){
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const msg = document.getElementById('message').value.trim();
+      const subject = encodeURIComponent('AI Product Scanner Support');
+      const body = encodeURIComponent(`From: ${email}\n\n${msg}`);
+      window.location.href = `mailto:support@example.com?subject=${subject}&body=${body}`;
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id = a.getAttribute('href');
+        if (id.length > 1){
+          const el = document.querySelector(id);
+          if (el){
+            e.preventDefault();
+            el.scrollIntoView({behavior:'smooth', block:'start'});
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
