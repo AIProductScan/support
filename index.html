@@ -4,12 +4,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AI Product Scanner – Discover Products Smarter</title>
+    <title>AI Product FAQ – Discover Products Smarter</title>
     <meta name="description"
         content="Scan barcodes, snap product photos, and instantly get AI-powered answers to commonly asked questions about retail products." />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta property="og:title" content="AI Product Scanner" />
-    <meta property="og:description" content="Scan. Snap. Learn. AI-powered answers for every product." />
+    <meta property="og:title" content="AI Product FAQ" />
+    <meta property="og:description" content="Photo . AI . Answers. AI-powered answers for every product." />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="" />
     <meta name="theme-color" content="#4A90E2" />
@@ -117,6 +117,22 @@
             color: white;
             font-weight: 600;
             box-shadow: 0 2px 8px rgba(25, 118, 210, .25);
+        }
+
+        .hamburger {
+            display: none;
+            /* Hide on desktop */
+            z-index: 99;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .hamburger svg {
+            color: var(--text);
+            width: 28px;
+            height: 28px;
         }
 
         .cta:hover {
@@ -339,8 +355,42 @@
         }
 
         @media (max-width: 640px) {
+            .hamburger {
+                display: block;
+            }
+
             .navlinks {
+                /* Hide the navlinks by default on mobile, JS will toggle it */
                 display: none;
+            }
+
+            .navlinks.is-open {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(5px);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 30px;
+                z-index: 98;
+            }
+
+            .navlinks.is-open a {
+                font-size: 22px;
+                color: var(--text);
+            }
+
+            .hero {
+                padding: 60px 0 40px;
+            }
+
+            section {
+                padding: 40px 0;
             }
 
             .card {
@@ -350,6 +400,13 @@
             .hero {
                 padding-top: 70px;
             }
+
+            .footergrid {
+                grid-template-columns: 1fr;
+                justify-items: center;
+                text-align: center;
+                gap: 24px;
+            }
         }
     </style>
 </head>
@@ -358,13 +415,13 @@
     <!-- Top Nav -->
     <header>
         <div class="container nav">
-            <a href="#home" class="brand" aria-label="AI Product Scanner home">
+            <a href="#home" class="brand" aria-label="AI Product FAQ home">
                 <span class="logo" aria-hidden="true">
                     <svg viewBox="0 0 24 24" role="img" aria-label="logo">
                         <path d="M4 5h2v14H4zM8 5h1v14H8zM11 5h2v14h-2zM15 5h1v14h-1zM18 5h2v14h-2z" />
                     </svg>
                 </span>
-                <span>AI Product Scanner</span>
+                <span>AI Product FAQ</span>
             </a>
 
             <nav class="navlinks" aria-label="Primary">
@@ -372,26 +429,30 @@
                 <a href="#how">How it works</a>
                 <a href="#privacy">Privacy</a>
                 <a href="#support">Support</a>
-                <a class="cta" style=color:white;" href="#download">Get the App</a>
+                <a class="cta" href="#download">Get the App</a>
             </nav>
+            <button class="hamburger" aria-label="Open menu" aria-expanded="false">
+                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
         </div>
     </header>
 
     <!-- Hero -->
     <main id="home" class="hero">
         <div class="container">
-            <span class="badge">Discover Products Smarter with AI‑Powered Product Scanning</span>
-            <h1>Scan. Snap. Learn.</h1>
+            <span class="badge">Discover Products Smarter with AI‑Powered Product Imaging and Scanning</span>
+            <h1>Photo . AI . Learn.</h1>
             <p>
-                Ever wondered what's behind the barcode? With our AI-powered app, simply scan any barcode and instantly
-                uncover answers to the most commonly asked questions about the product. No need to dig through websites
-                or reviews.
-                <br><br>If barcode isn't recognized, no problem - just take a photo of the product, and our intelligent
-                image recognition will work to identify it and give you the same smart insights.
+                Ever wondered what's behind the product label? With our AI-powered app, simply snap a photo of any product capturing its front label and instantly
+                uncover answers to the frequently asked questions about the product. No need to dig through websites
+                or reviews. Barcode scanning is also supported, but photos work best.
 
-                <br><br>Perfect for shoppers, hobbyists, or the simply curious - Start scanning and see what your
+                <br><br>Perfect for shoppers, hobbyists, or the simply curious - Start snapping and see what your
                 products have to say.
             </p>
+             <p>
+                <b>Disclaimer:</b>This app is intended only as an educational showcase of AI capabilities in identifying and describing retail products. The information presented is for demonstration purposes and should not be relied upon for purchasing, safety, critical or regulatory decisions.&#10;
+                        </p>
             <div class="actions" style="display:flex; gap:12px; margin-top: 22px; flex-wrap: wrap;">
                 <a class="cta" id="download" href="#" aria-label="Download on the App Store (coming soon)">Coming soon
                     on the App Store</a>
@@ -413,8 +474,8 @@
                             <path d="M3 3h18v2H3zM3 19h18v2H3zM7 8h2v8H7zM11 8h2v8h-2zM15 8h2v8h-2z" />
                         </svg>
                     </span>
-                    <h3>Barcode & Photo</h3>
-                    <p>Scan EAN/UPC barcodes or take a quick photo—our AI assist understands both.</p>
+                    <h3>Photo and barcode</h3>
+                    <p>Take a quick photo or scan an EAN/UPC barcode — our AI assist understands both.</p>
                 </div>
                 <div class="card" style="grid-column: span 4;">
                     <span class="icon" aria-hidden="true">
@@ -443,32 +504,32 @@
     <section id="how">
         <div class="container">
             <h2 class="section-title">How it works</h2>
-            <p class="section-sub">Three simple steps to product clarity.</p>
+            <p class="section-sub">Two simple steps to product discovery.</p>
             <div class="steps">
                 <div class="step">
                     <span class="num">1</span>
-                    <div>
-                        <h3>Scan a retail EAN/UPC product barcode </h3>
-                        <p>Press the barcode button and point the scanner window at a barcode. Our fast barcode
-                            recognition will only read EAN/UPC codes.</p>
+                    <div> <h3>Use camer button</h3>
+                        <p>Tap the Camera button to take a clear photo of the product’s front label. Good lighting and a straight angle help our AI recognize it accurately.</p>
                     </div>
                 </div>
                 <div class="step">
                     <span class="num">2</span>
-                    <div>
-                        <h3>If barcode fails - use camer button</h3>
-                        <p>If a barcode doesn’t scan or shows the wrong product, use the camera button to capture the
-                            front label instead.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <span class="num">3</span>
                     <div>
                         <h3>Answers in your language and adapted to your region.</h3>
                         <p>You can also receive answers in your preferred language, with results adapted to your region
                             where available.</p>
                     </div>
                 </div>
+                <div class="step">
+                   
+                    <div>
+                        
+                        <p>Alternatively, barcode scan is also supported. Tap the barcode button and point the scanner window at the product's barcode. Our fast barcode
+                            recognition will only read EAN/UPC codes. Please note that barcode scanning may not always identify products accurately.</p>
+                    
+                       </div>
+                </div>
+                
                 <div class="step">
 
                     <svg viewBox="0 0 24 24" width="64" height="64" fill="none">
@@ -508,7 +569,7 @@
             <details open>
                 <summary>Summary</summary>
                 <p>
-                    <strong>AI Product Scanner</strong> captures barcodes and optional product photos to identify items
+                    <strong>AI Product FAQ</strong> captures barcodes and optional product photos to identify items
                     and generate AI‑assisted answers.
                     We do not sell personal data. Limited analytics may be used to improve app reliability and
                     performance. You can delete the app at any time to remove locally stored data.
@@ -608,7 +669,7 @@
                 <span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24">
                         <path d="M4 5h2v14H4zM8 5h1v14H8zM11 5h2v14h-2zM15 5h1v14h-1zM18 5h2v14h-2z" />
                     </svg></span>
-                <span>AI Product Scanner</span>
+                <span>AI Product FAQ</span>
             </div>
             <div class="footerlinks">
                 <a href="#privacy">Privacy</a>
@@ -661,16 +722,6 @@
         // Privacy last updated date
         document.getElementById('pp-date').textContent = new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
 
-        // Support form -> opens user's email client (mailto)
-        function mailtoSupport(e) {
-            e.preventDefault();
-            const email = document.getElementById('email').value.trim();
-            const msg = document.getElementById('message').value.trim();
-            const subject = encodeURIComponent('AI Product Scanner Support');
-            const body = encodeURIComponent(`From: ${email}\n\n${msg}`);
-            window.location.href = `mailto:support@example.com?subject=${subject}&body=${body}`;
-        }
-
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(a => {
             a.addEventListener('click', (e) => {
@@ -681,6 +732,28 @@
                         e.preventDefault();
                         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
+                }
+            });
+        });
+
+        // Hamburger menu logic
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.navlinks');
+
+        hamburger.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('is-open');
+            hamburger.setAttribute('aria-expanded', isOpen);
+            // Prevent body from scrolling when the mobile menu is open
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+
+        // Close the mobile menu when a link is clicked
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('is-open')) {
+                    navLinks.classList.remove('is-open');
+                    hamburger.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
                 }
             });
         });
